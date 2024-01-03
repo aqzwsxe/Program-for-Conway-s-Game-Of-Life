@@ -17,6 +17,7 @@ public class BaiscGame {
 //    Any dead cell with three live neighbours becomes a live cell.
 //    All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 
+
     static int[][] grid = new int[9][9];
     public static Random random = new Random();
     /*
@@ -24,7 +25,7 @@ public class BaiscGame {
     i = row
      */
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 grid[i][j] = random.nextInt(2);
@@ -32,10 +33,11 @@ public class BaiscGame {
         }
         System.out.println("init---------------init");
         printGrid();
+        int changed = 1;
         // 1 == survive; 0 = died
-        while (true) {
+        while (changed != 0) {
             // infinite loop, never terminate
-
+            changed = 0;
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     int cell1 = grid[i][j];
@@ -45,10 +47,12 @@ public class BaiscGame {
                         if (num_nei == 0 || num_nei == 1) {
                             //Each cell with one or no neighbors dies, as if by solitude.
                             grid[i][j] = 0;
+                            changed = 1;
                         }
                         //Each cell with four or more neighbors dies,
                         else if (num_nei >= 4) {
                             grid[i][j] = 0;
+                            changed = 1;
                         }
                         //Each cell with two or three neighbors survives.
                         else {
@@ -61,6 +65,7 @@ public class BaiscGame {
                     else {
                         if (num_nei == 3) {
                             grid[i][j] = 1;
+                            changed = 1;
                         }
 
 
@@ -117,6 +122,8 @@ public class BaiscGame {
         }
         return counter;
     }
+
+
 
 
 }
